@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { TwitterService } from '../services/twitter.service';
 import Swal from 'sweetalert2';
 declare var $: any;
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
-export class AppComponent implements OnInit{
-  constructor () {}
+export class HomeComponent implements OnInit {
+
+  constructor (private ts: TwitterService) {}
   ngOnInit() {
     $('#text').on('keyup', (e) => {
       if (e.keyCode == 13) this.searchTweets();
@@ -28,10 +30,9 @@ export class AppComponent implements OnInit{
       });
     }
     else {
-      
-      // this.ts.searchTweets(this.word).subscribe(
-      //   tweets => console.log(tweets)
-      // );
+      this.ts.searchTweets(this.word).subscribe(
+        tweets => console.log(tweets)
+      );
     }
   }
 }

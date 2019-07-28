@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import Swal from 'sweetalert2';
 import { TwitterService } from '../services/twitter.service';
+import Swal from 'sweetalert2';
 declare var $: any;
 
 @Component({

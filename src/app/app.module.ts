@@ -5,16 +5,14 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { TweetsComponent } from './tweets/tweets.component';
-import { TweetComponent } from './tweets/tweet/tweet.component';
+import { SearchComponent } from './search/search.component';
+import { TweetComponent } from './tweet/tweet.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    TweetsComponent,
     TweetComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,

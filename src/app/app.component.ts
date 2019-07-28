@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import Swal from 'sweetalert2';
-declare var $: any;
+import { TwitterService } from './services/twitter.service';
+
 
 @Component({
   selector: 'app-root',
@@ -8,30 +8,21 @@ declare var $: any;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  constructor () {}
+  constructor (private ts: TwitterService) {}
   ngOnInit() {
-    $('#text').on('keyup', (e) => {
-      if (e.keyCode == 13) this.searchTweets();
-    });
+    this.ts.getTweets().subscribe(
+      tweets => {
+        this.tweets = tweets.data;
+      }
+    );
   }
-  word: string = '';
-  tweets: {}[] = [];
-  isEmpty() {
-    return this.word.length <= 0;
-  }
-  searchTweets () {
-    if (this.isEmpty()) {
-      Swal.fire({
-        type: 'error',
-        title: 'Oops...',
-        text: 'Debes escribir algo!',
-      });
-    }
-    else {
-      
-      // this.ts.searchTweets(this.word).subscribe(
-      //   tweets => console.log(tweets)
-      // );
-    }
+  tweets: any[];
+
+  searchTweets(word: string) {
+    this.ts.searchTweets(word).subscribe(
+      tweets => {
+        this.tweets = tweets.data.statuses;
+      }
+    );
   }
 }

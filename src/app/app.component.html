@@ -1,13 +1,13 @@
 <div style="padding-top: 5%;">
     <div class="container h-100">
-      <div class="d-flex justify-content-center h-100">
-        <div class="searchbar">
-          <input class="search_input" type="text" name="text" id="text" placeholder="Buscar..." [(ngModel)]="word">
-          <a class="search_icon" id="search" (click)="searchTweets()"><i class="fa fa-search"></i></a>
-        </div>
-      </div>
+      <app-search (search)="searchTweets($event)"></app-search>
       <div style="padding-top: 5%;">
-        <app-tweets></app-tweets>
+        <div class="row">
+          <div class="col-md-4 col-sm-6 col-xs-12" *ngFor="let t of tweets" style="padding-bottom: 2%;">
+            <app-tweet [tweet]="t"></app-tweet>
+          </div>
+        </div>
+        
       </div>
     </div>
 </div>

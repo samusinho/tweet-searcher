@@ -1,0 +1,32 @@
+
+.half-circle-container {
+    position: absolute;
+    bottom: -1px;
+    width: 100%;
+}
+
+.half-circle {
+    height: 45px;
+    width: 90px;
+    border-top-left-radius: 90px;
+    border-top-right-radius: 90px;
+    background-color: rgba(29,161,242,1.00);
+    text-align: center;
+    margin: 0 auto;
+}
+
+.logo{
+    height: 100%;
+}
+
+.tweet-more{
+    background-color: rgba(29,161,242,1.00);
+    width: 90%;
+    position: absolute;
+    min-height: 100px;
+    max-height: 100%;
+    margin-left: 5%;
+    margin-right: 5%;
+    bottom: -35px;
+    z-index: -1;
+}

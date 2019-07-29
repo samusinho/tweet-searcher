@@ -1,10 +1,18 @@
-<div class="card" style="width: 18rem; height: 100%;">
-    <div class="card-body">
+<div class="card" style="height: 100%;">
+    <div class="card-body" style="padding-bottom: 0; position: relative;">
         <h5 class="card-title">{{tweet.user.name}}</h5>
         <h6 class="card-subtitle mb-2 text-muted">@{{tweet.user.screen_name}}</h6>
-        <p class="card-text">{{tweet.full_text.substring(0, 20)}}...</p>
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
+        <hr>
+        <p class="card-text" style="margin-bottom: 60px;">{{tweet.full_text.substring(0,20)}}...</p>
+        <!-- links para dar favorito pendiente -->
+    </div>
+    <div class="half-circle-container">
+        <div class="half-circle">
+            <img src="{{logo}}" class="logo">
+        </div>
+    </div>
+    <div class="tweet-more">
+
     </div>
 </div>
 

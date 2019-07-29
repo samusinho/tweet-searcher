@@ -25,7 +25,7 @@ export class SearchComponent implements OnInit {
     return this.word.length <= 0;
   }
   isWrong() {
-    return false;
+    return false; //pendiente verificar caracteres @ y #
   }
   searchTweets () {
     if (this.isEmpty()) Swal.fire({ type: 'error', title: 'Campo vacio...', text: 'Debes escribir algo!' });

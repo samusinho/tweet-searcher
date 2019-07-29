@@ -25,7 +25,8 @@ export class SearchComponent implements OnInit {
     return this.word.length <= 0;
   }
   isWrong() {
-    return this.word.indexOf('#') == -1 || this.word.indexOf('@') == -1;
+    console.log(this.word.indexOf('#'), this.word.indexOf('@'))
+    return false//this.word.indexOf('#') == -1 || this.word.indexOf('@') == -1;
   }
   searchTweets () {
     if (this.isEmpty()) Swal.fire({ type: 'error', title: 'Campo vacio...', text: 'Debes escribir algo!' });

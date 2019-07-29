@@ -1,7 +1,14 @@
 <div class="card" style="height: 100%;">
     <div class="card-body" style="padding-bottom: 0; position: relative;">
-        <h5 class="card-title">{{tweet.user.name}}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">@{{tweet.user.screen_name}}</h6>
+        <div class="row">
+            <div class="col-md-4">
+                <img src="{{tweet.user.profile_image_url}}" class="card-img">
+            </div>
+            <div class="col-md-8">
+                <h5 class="card-title">{{tweet.user.name}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">@{{tweet.user.screen_name}}</h6>
+            </div>
+        </div>
         <hr>
         <p class="card-text" style="margin-bottom: 60px;">{{tweet.full_text.substring(0,20)}}...</p>
         <!-- links para dar favorito pendiente -->
@@ -11,9 +18,11 @@
             <img src="{{logo}}" class="logo">
         </div>
     </div>
-    <div class="tweet-more">
+    <div class="tweet-more" [ngStyle]="{'bottom': moreTweetBottom }">
         <div></div>
-        <div class="tweet-more-text">{{tweet.full_text}}</div>
+        <div class="tweet-more-text">
+            <p style="margin-bottom: 35px;">{{tweet.full_text}}</p>
+        </div>
         <div class="tweet-more-button">
             <a (click)="showFullTweet()">Mas...</a>
         </div>

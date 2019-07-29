@@ -29,4 +29,28 @@
     margin-right: 5%;
     bottom: -35px;
     z-index: -1;
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
+}
+
+.tweet-more-text {
+    color: white;
+    text-align: justify;
+}
+
+.tweet-more-button{
+    text-align: right;
+    position: absolute;
+    bottom: -0;
+    width: 100%;
+    padding-right: 10px;
+}
+
+.tweet-more-button >a {
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
 }

@@ -25,13 +25,13 @@ export class SearchComponent implements OnInit {
     return this.word.length <= 0;
   }
   isWrong() {
-    return false; //pendiente verificar caracteres @ y #
+    return this.word.indexOf('#') == -1 || this.word.indexOf('@') == -1;
   }
   searchTweets () {
     if (this.isEmpty()) Swal.fire({ type: 'error', title: 'Campo vacio...', text: 'Debes escribir algo!' });
     else if (this.isWrong()) Swal.fire({ type: 'error', 
                                          title: 'Texto con errores...', 
-                                         text: 'El texto de busqueda no puede contener @ o #!' });
+                                         text: `El texto de busqueda no puede contener "@" o "#"!` });
     else this.search.emit(this.word);
   }
 }

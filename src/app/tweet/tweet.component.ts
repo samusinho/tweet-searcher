@@ -8,18 +8,25 @@ import { Component, Input } from '@angular/core';
 export class TweetComponent   {
 
   constructor() {
-    this.moreTweetBottom = '-30px';
+    this.adjustBottom('30px');
   }
 
   @Input() tweet: {};
   logo: string = 'https://png.pngtree.com/element_our/md/20180509/md_5af2d4c9325e1.png';
-  moreButtonClicked: boolean = false;
-  moreTweetBottom: string;
+  height: string;
+  bottom: string;
+  moreClicked: boolean = false;
+  
+
+  adjustBottom(value: string) {
+    this.height = value;
+    this.bottom = this.height == '0px' ? this.height : `-${this.height}`;
+  }
 
   showFullTweet() {
-    this.moreButtonClicked = !this.moreButtonClicked;
-    // calcular altura del contenedor pendiente
-    this.moreTweetBottom = this.moreButtonClicked ? '-100px': '-30px'
+    this.moreClicked = !this.moreClicked;
+    let value = this.moreClicked ? '400px': '30px';
+    this.adjustBottom(value);
   }
 
 }

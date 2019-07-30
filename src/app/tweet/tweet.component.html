@@ -1,4 +1,4 @@
-<div class="card" style="height: 100%;">
+<div class="card" style="height: 100%; width: 100%;">
     <div class="card-body" style="padding-bottom: 0; position: relative;">
         <div class="row">
             <div class="col-md-4">
@@ -24,15 +24,15 @@
             <img src="{{logo}}" class="logo">
         </div>
     </div>
-    <div class="tweet-more" [ngStyle]="{'bottom': bottom, 'height': height }">
-        <div></div>
-        <div class="tweet-more-text">
-            <p style="margin-bottom: 35px;">{{tweet.full_text}}</p>
-        </div>
-        <div class="tweet-more-button">
-            <a (click)="showFullTweet()">Mas...</a>
-        </div>
+</div>
+<div class="tweet-container">
+    <div id="{{tweet.id_str}}" class="tweet-text">
+        <hr>
+        {{tweet.created_at}}
+        <hr>
+        {{tweet.full_text}}
     </div>
+    <a (click)="toogle()">Mas...</a>
 </div>
 
 

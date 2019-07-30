@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+declare var $: any;
 
 @Component({
   selector: 'app-tweet',
@@ -8,25 +9,28 @@ import { Component, Input } from '@angular/core';
 export class TweetComponent   {
 
   constructor() {
-    this.adjustBottom('30px');
+    
   }
 
-  @Input() tweet: {};
+  @Input() tweet: {
+    created_at: string,
+    full_text: string,
+    id_str: string,
+    retweeted: boolean,
+    favorited: boolean,
+    user: {
+      profile_image_url: string,
+      name: string,
+      screen_name: string,
+    }
+  };
   logo: string = 'https://png.pngtree.com/element_our/md/20180509/md_5af2d4c9325e1.png';
-  height: string;
-  bottom: string;
   moreClicked: boolean = false;
   
-
-  adjustBottom(value: string) {
-    this.height = value;
-    this.bottom = this.height == '0px' ? this.height : `-${this.height}`;
-  }
-
-  showFullTweet() {
-    this.moreClicked = !this.moreClicked;
-    let value = this.moreClicked ? '400px': '30px';
-    this.adjustBottom(value);
+  toogle() {
+    console.log('click')
+    
+    $('#' + this.tweet.id_str).slideToggle();
   }
 
 }

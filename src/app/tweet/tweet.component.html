@@ -32,7 +32,12 @@
         <hr>
         {{tweet.full_text}}
     </div>
-    <a (click)="toogle()">Mas...</a>
+    <a *ngIf="!clicked; else buttonClicked" (click)="toogle()">Mas...</a>
+    <ng-template #buttonClicked>
+        <a (click)="toogle()">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+    </ng-template>
 </div>
 
 

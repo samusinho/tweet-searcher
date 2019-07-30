@@ -1,14 +1,18 @@
-<!--The content below is only a placeholder and can be replaced.-->
 <div style="padding-top: 5%;">
-  <div class="container h-100">
-    <div class="d-flex justify-content-center h-100">
-      <div class="searchbar">
-        <input class="search_input" type="text" name="" placeholder="Buscar...">
-        <a href="#" class="search_icon"><i class="fa fa-search"></i></a>
+    <div class="container h-100">
+      <app-search (search)="searchTweets($event)"></app-search>
+    </div>
+    <div class="container" style="padding-top: 5%;">
+      <h2>{{ infoText }}</h2>
+    </div>
+    <div class="container" style="padding-top: 5%;">
+      <div class="row">
+        <app-tweet 
+        style="margin-bottom: 60px;"
+        class="col-md-4 col-sm-6 col-xs-12" 
+        *ngFor="let t of tweets" 
+        [tweet]="t"></app-tweet>
       </div>
     </div>
-  </div>
 </div>
 
-
-<router-outlet></router-outlet>

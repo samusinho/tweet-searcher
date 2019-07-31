@@ -53,8 +53,8 @@ export class TwitterService {
     );
   }
 
-  destroytweet(id: string) {
-    return this.http.post<TwitterResponse>(`${this.serverUrl}/destroy/${id}`, {
+  unretweet(id: string) {
+    return this.http.post<TwitterResponse>(`${this.serverUrl}/unretweet/${id}`, {
       id: id
     }).pipe(
       map(data => data)

@@ -1,6 +1,6 @@
 <div class="card" style="height: 100%; width: 100%;">
     <div class="card-body" style="padding-bottom: 0; position: relative;">
-        <div class="row">
+        <div class="row"> <!--pendiente arreglo cuando la pantalla es xs-->
             <div class="col-md-4">
                 <img src="{{tweet.user.profile_image_url}}" class="card-img">
             </div>
@@ -43,7 +43,7 @@
         </div>
     </div>
 </div>
-<div class="tweet-container">
+<div class="tweet-container" [ngClass]=" clicked ? 'clicked': 'unclicked'">
     <div id="{{tweet.id_str}}" class="tweet-text">
         <hr>
         {{tweet.created_at}}

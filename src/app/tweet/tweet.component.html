@@ -13,9 +13,27 @@
         <p class="card-text">{{tweet.full_text.substring(0,20)}}...</p>
         <hr>
         <div style="text-align: right;">
-            <a href="#" class="card-link"><i class="fa fa-heart"></i></a>
-            <a href="#" class="card-link"><i class="fa fa-retweet"></i></a>
-            <a href="#" class="card-link"><i class="fa fa-share"></i></a>
+            <a class="card-link" 
+                (click)="favorite()" 
+                data-toggle="tooltip"
+                data-placement="top"
+                [title]="favorited">
+                <i class="fa fa-heart" [ngClass]="{ 'red': tweet.favorited }"></i>
+            </a>
+            <a class="card-link"
+            (click)="retweet()"
+            data-toggle="tooltip"
+            data-placement="top"
+            [title]="retweeted">
+                <i class="fa fa-retweet" [ngClass]="{ 'green': tweet.retweeted }"></i>
+            </a>
+            <a class="card-link"
+            (click)="copyUrl()"
+            data-toggle="tooltip"
+            data-placement="top"
+            title="Copiar link">
+                <i class="fa fa-share"></i>
+            </a>
         </div>
         <div style="margin-bottom: 70px;"></div>
     </div>
@@ -39,5 +57,3 @@
         </a>
     </ng-template>
 </div>
-
-

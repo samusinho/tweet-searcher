@@ -45,3 +45,10 @@
     float: right;
     margin-bottom: 10px;
 }
+
+.red {
+    color: red;
+}
+.green {
+    color: darkgreen;
+}

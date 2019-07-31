@@ -14,7 +14,8 @@ export class AppComponent implements OnInit{
       tweets => {
         this.tweets = tweets.data;
         this.infoText = 'Tweets recientes...';
-      }
+      },
+      error => console.log(error)
     );
   }
   tweets: any[];
@@ -31,7 +32,8 @@ export class AppComponent implements OnInit{
           this.infoText = '';
         }
         else this.infoText = `Resultados para "${word}"...`;
-      }
+      },
+      error => console.log(error)
     );
   }
 }

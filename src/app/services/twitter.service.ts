@@ -28,4 +28,36 @@ export class TwitterService {
       map(data => data)
     );
   }
+
+  favorite(id: string) {
+    return this.http.post<TwitterResponse>(`${this.serverUrl}/favorites/create/${id}`, {
+      id: id
+    }).pipe(
+      map(data => data)
+    );
+  }
+
+  unfavorite(id: string) {
+    return this.http.post<TwitterResponse>(`${this.serverUrl}/favorites/destroy/${id}`, {
+      id: id
+    }).pipe(
+      map(data => data)
+    );
+  }
+
+  retweet(id: string) {
+    return this.http.post<TwitterResponse>(`${this.serverUrl}/retweet/${id}`, {
+      id: id
+    }).pipe(
+      map(data => data)
+    );
+  }
+
+  destroytweet(id: string) {
+    return this.http.post<TwitterResponse>(`${this.serverUrl}/destroy/${id}`, {
+      id: id
+    }).pipe(
+      map(data => data)
+    );
+  }
 }

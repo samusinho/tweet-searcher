@@ -15,6 +15,7 @@ export class TweetComponent implements OnInit {
 
   ngOnInit() {
     this.tooltipsText();
+    console.log(this.tweet);
   }
 
   clicked: boolean = false; //estado del boton que muestra/oculta contenedor del tweet con el texto completo

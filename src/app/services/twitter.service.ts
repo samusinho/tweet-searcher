@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 
 export interface TwitterResponse {
   data: any;
@@ -30,10 +30,11 @@ export class TwitterService {
   }
 
   favorite(id: string) {
-    return this.http.post<TwitterResponse>(`${this.serverUrl}/favorites/create/${id}`, {
+    return this.http.post<any>(`${this.serverUrl}/favorites/create/${id}`, {
       id: id
     }).pipe(
-      map(data => data)
+      map(data => data),
+      catchError(err => err)
     );
   }
 

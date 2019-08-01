@@ -1,18 +1,24 @@
-<div style="padding-top: 5%;">
-    <div class="container h-100">
-      <app-search 
-      (search)="searchTweets($event)"></app-search>
+<div>
+    <div class="fixed-top c-nabvar">
+      <div class="container">
+        <app-search 
+        (search)="searchTweets($event)"></app-search>
+      </div>
+      <div class="container" style="padding-top: 5%;">
+        <h2>{{ infoText }}</h2>
+      </div>
     </div>
-    <div class="container" style="padding-top: 5%;">
-      <h2>{{ infoText }}</h2>
-    </div>
-    <div class="container" style="padding-top: 5%;">
+    <div class="container" style="padding-top: 200px;">
       <div class="row">
         <app-tweet 
         style="margin-bottom: 60px;"
-        class="col-md-4 col-sm-6 col-xs-12" 
+        class="col-md-4 col-sm-6 col-xs-12"
         *ngFor="let t of tweets" 
         [tweet]="t"></app-tweet>
+      </div>
+      <div *ngIf="endOfResults" style="text-align: center;">
+        <hr>
+        <h2 >Fin de los resultados :( ...</h2>
       </div>
     </div>
 </div>

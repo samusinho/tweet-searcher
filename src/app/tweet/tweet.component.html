@@ -1,0 +1,59 @@
+<div class="card" style="height: 100%; width: 100%;">
+    <div class="card-body" style="padding-bottom: 0; position: relative;">
+        <div class="row"> <!--pendiente arreglo cuando la pantalla es xs-->
+            <div class="col-md-4 col-sm-4 col-4">
+                <img src="{{tweet.user.profile_image_url}}" class="card-img" >
+            </div>
+            <div class="col-md-8 col-sm-8 col-8">
+                <h5 class="card-title">{{tweet.user.name}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">@{{tweet.user.screen_name}}</h6>
+            </div>
+        </div>
+        <hr>
+        <p class="card-text">{{tweet.full_text.substring(0,20)}}...</p>
+        <hr>
+        <div style="text-align: right;">
+            <a class="card-link" 
+                (click)="favorite()" 
+                data-toggle="tooltip"
+                data-placement="top"
+                [title]="favorited">
+                <i class="fa fa-heart" [ngClass]="{ 'red': tweet.favorited }"></i>
+            </a>
+            <a class="card-link"
+            (click)="retweet()"
+            data-toggle="tooltip"
+            data-placement="top"
+            [title]="retweeted">
+                <i class="fa fa-retweet" [ngClass]="{ 'green': tweet.retweeted }"></i>
+            </a>
+            <a class="card-link"
+            (click)="copyUrl()"
+            data-toggle="tooltip"
+            data-placement="top"
+            title="Copiar link">
+                <i class="fa fa-share"></i>
+            </a>
+        </div>
+        <div style="margin-bottom: 70px;"></div>
+    </div>
+    <div class="half-circle-container">
+        <div class="half-circle">
+            <img src="{{logo}}" class="logo">
+        </div>
+    </div>
+</div>
+<div class="tweet-container" [ngClass]=" clicked ? 'clicked': 'unclicked'">
+    <div id="{{tweet.id_str}}" class="tweet-text">
+        <hr>
+        {{tweet.created_at}}
+        <hr>
+        {{tweet.full_text}}
+    </div>
+    <a *ngIf="!clicked; else buttonClicked" (click)="toogle()">Mas...</a>
+    <ng-template #buttonClicked>
+        <a (click)="toogle()">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+    </ng-template>
+</div>

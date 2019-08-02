@@ -29,8 +29,8 @@ export class SearchComponent implements OnInit {
     return false//this.word.indexOf('#') == -1 || this.word.indexOf('@') == -1;
   }
   searchTweets () {
-    if (this.isEmpty()) Swal.fire({ type: 'error', title: 'Campo vacio...', text: 'Debes escribir algo!' });
-    else if (this.isWrong()) Swal.fire({ type: 'error', 
+    if (this.isEmpty()) Swal.fire({ type: 'warning', title: 'Campo vacio...', text: 'Debes escribir algo!' });
+    else if (this.isWrong()) Swal.fire({ type: 'warning', 
                                          title: 'Texto con errores...', 
                                          text: `El texto de busqueda no puede contener "@" o "#"!` });
     else this.search.emit(this.word);

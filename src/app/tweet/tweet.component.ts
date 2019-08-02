@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { TwitterService } from '../services/twitter.service';
+import { AlertService } from '../services/alert.service';
 import { ClipboardService } from 'ngx-clipboard';
-import Swal from 'sweetalert2';
+
 declare var $: any;
 
 @Component({
@@ -11,17 +12,17 @@ declare var $: any;
 })
 export class TweetComponent implements OnInit {
 
-  constructor(private ts: TwitterService, private cb: ClipboardService) { }
+  constructor(private ts: TwitterService, private cb: ClipboardService, private _alert: AlertService) { }
 
   ngOnInit() {
     this.tooltipsText();
-    console.log(this.tweet);
   }
 
   clicked: boolean = false; //estado del boton que muestra/oculta contenedor del tweet con el texto completo
   logo: string = 'https://png.pngtree.com/element_our/md/20180509/md_5af2d4c9325e1.png'; //url logo twitter
   retweeted: string;
   favorited: string;
+  @Output('delete') toDelete = new EventEmitter<string>();
   @Input() tweet: { //informacion util de cada tweet del response
     created_at: string,
     full_text: string,
@@ -37,17 +38,12 @@ export class TweetComponent implements OnInit {
   };
 
   copyUrl() {//copiar en el portapapeles
-    const Toast = Swal.mixin({ //alerta tipo toast
-      toast: true,
-      position: 'center',
-      showConfirmButton: false,
-      timer: 3000
-    });
+    console.log(this.tweet.entities)
     if (this.tweet.entities.urls.length > 0) {
       this.cb.copyFromContent(this.tweet.entities.urls[0].url);
-      Toast.fire({ type: 'info', title: 'Link copiado al portapapeles...' });
+      this._alert.infoToast('Link copiado al portapapeles...');
     }
-    else Toast.fire({ type: 'error', title: 'No hay link para compartir...' });
+    else this._alert.infoToast('No hay link para compartir...');
   }
   
   tooltipsText() { // modifica textos tooltips botones de favorito y retweet
@@ -61,68 +57,64 @@ export class TweetComponent implements OnInit {
   }
 
   favorite() {
-    const Toast = Swal.mixin({ //alerta tipo toast
-      toast: true,
-      position: 'bottom-end',
-      showConfirmButton: false,
-      timer: 3000
-    });
     if (!this.tweet.favorited) {
       this.ts.favorite(this.tweet.id_str).subscribe(
         result => {
-          if (result.resp.statusCode == 200 && result.data.favorited) {
+          if (!result.error && result.favorited) {
             this.tweet.favorited = true; //se marca como favorito si la respuesta es exitosa
             this.tooltipsText();
-            Toast.fire({ type: 'success', title: 'Marcado como favorito...' });
-          }//error si llega una respuesta diferente a la esperada
-          else Toast.fire({ type: 'error', title: 'No se pudo marcar como favorito...' });
-        },
-        error => console.log(error)
+            this._alert.successToast('Marcado como favorito...');
+          }
+          else {
+            this._alert.showError(result);
+            if (result.code == 139) this.tweet.favorited = true;//se actualiza el estado del tweet a favorito
+            if (result.code == 144) this.toDelete.emit(this.tweet.id_str);
+          }
+        }
       );
     }else {
       this.ts.unfavorite(this.tweet.id_str).subscribe(
         result => {
-          if (result.resp.statusCode == 200 && !result.data.favorited) {
+          if (!result.error  && !result.favorited) {
             this.tweet.favorited = false; //se remueve de favoritos si la respuesta es exitosa
             this.tooltipsText();
-            Toast.fire({ type: 'success', title: 'Removido de favoritos...' });
+            this._alert.successToast('Removido de favoritos...');
+          }else {
+            this._alert.showError(result);
+            if (result.code == 144) this.toDelete.emit(this.tweet.id_str);
           }
-          else Toast.fire({ type: 'error', title: 'No se pudo remover de favoritos...' });
-        },
-        error => console.log(error)
+        }
       );
     }
   }
   retweet() { //metodo para agregar o deshacer un retweet
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'bottom-end',
-      showConfirmButton: false,
-      timer: 3000
-    });
     if (!this.tweet.retweeted) {
       this.ts.retweet(this.tweet.id_str).subscribe(
         result => {
-          if (result.resp.statusCode == 200 && result.data.retweeted) {
+          if (!result.error && result.retweeted) {
             this.tweet.retweeted = true;
             this.tooltipsText();
-            Toast.fire({ type: 'success', title: 'Retweet...' });
+            this._alert.successToast('Retweet...');
+          }else {
+            this._alert.showError(result);
+            if (result.code == 327) this.tweet.retweeted = true;//se actualiza el estado del retweet
+            if (result.code == 144) this.toDelete.emit(this.tweet.id_str);
           }
-          else Toast.fire({ type: 'error', title: 'No se pudo hacer retweet...' });
-        },
-        error => console.log(error)
+        }
       );
     }else { 
       this.ts.unretweet(this.tweet.id_str).subscribe(
         result => {
-          if (result.resp.statusCode == 200 && result.data.truncated) {
+          if (!result.error || result.truncated) { // esto se debe a que a veces hay errores en las respuestas del api
             this.tweet.retweeted = false;
             this.tooltipsText();
-            Toast.fire({ type: 'success', title: 'Retweet removido...' });
+            this._alert.successToast('Retweet removido...');
+          }else {
+            this._alert.showError(result);
+            if (result.code == 327) this.tweet.retweeted = true;//se actualiza el estado del retweet
+            if (result.code == 144) this.toDelete.emit(this.tweet.id_str);
           }
-          else Toast.fire({ type: 'error', title: 'No se pudo deshacer el retweet...' });
-        },
-        error => console.log(error)
+        }
       );
     }
   }

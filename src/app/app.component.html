@@ -10,7 +10,7 @@
     </div>
     <div class="container" style="padding-top: 200px;">
       <div class="row">
-        <app-tweet 
+        <app-tweet (delete)="deleteTweet($event)"
         style="margin-bottom: 60px;"
         class="col-md-4 col-sm-6 col-xs-12"
         *ngFor="let t of tweets" 

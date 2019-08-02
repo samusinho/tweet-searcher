@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TwitterService } from './services/twitter.service';
-import Swal from 'sweetalert2';
+import { AlertService } from './services/alert.service';
 declare var $: any;
 
 @Component({
@@ -9,17 +9,20 @@ declare var $: any;
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit{
-  constructor (private ts: TwitterService) {}
+  constructor (private ts: TwitterService, private _alert: AlertService) {}
   ngOnInit() {
     this.initInfiniteScroll();
     this.ts.getTweets().subscribe(
       tweets => {
-        this.resetAll();
-        this.setResultText('Tweets recientes...');
-        this.makePagination(tweets.data);
-        this.addToResults(this.page.toString());
-      },
-      error => console.log(error)
+        if (!tweets.error) {
+          if (tweets.data.length > 0) {
+            this.resetAll();
+            this.setResultText('Tweets recientes...');
+            this.makePagination(tweets.data);
+            this.addToResults(this.page);
+          }
+        }
+      }
     );
   }
   tweets: any[] = [];
@@ -32,7 +35,7 @@ export class AppComponent implements OnInit{
     $(window).scroll(() => {
       if ($(window).scrollTop() >= $('body').height() - $(window).height() - 15) {
         this.page++;
-        this.addToResults(this.page.toString());
+        this.addToResults(this.page);
       }
     });
   }
@@ -43,6 +46,7 @@ export class AppComponent implements OnInit{
     this.pagination = {};
     this.tweets = [];
     this.endOfResults = false;
+    this.setResultText('');
   }
 
   setResultText(text: string) {
@@ -60,8 +64,8 @@ export class AppComponent implements OnInit{
     }
   }
 
-  addToResults(index_: string) {
-    if (this.pagination.hasOwnProperty(index_)) {
+  addToResults(index_: number) {
+    if (this.pagination.hasOwnProperty(index_.toString())) {
       this.endOfResults = false;
       for (let i of this.pagination[index_]) this.tweets.push(i);
     }
@@ -71,19 +75,33 @@ export class AppComponent implements OnInit{
   searchTweets(word: string) {
     this.ts.searchTweets(word).subscribe(
       tweets => {
-        if (tweets.data.statuses.length <= 0) {
-          Swal.fire({ type: 'error', 
-                      title: 'Sin resultados...', 
-                      text: `No se encontraron resultados para "${word}"...` });
-          this.infoText = '';
-        }else {
-          this.resetAll();
-          this.setResultText(`Resultados para "${word}"...`);
-          this.makePagination(tweets.data.statuses);
-          this.addToResults(this.page.toString());
+        if(!tweets.error) {
+          if (tweets.data.length <= 0) {
+            this._alert.infoAlert('Sin resultados...', `No se encontraron resultados para "${word}"...`);
+            this.resetAll();
+          }else {
+            this.resetAll();
+            this.setResultText(`Resultados para "${word}"...`);
+            this.makePagination(tweets.data);
+            this.addToResults(this.page);
+          }
         }
-      },
-      error => console.log(error)
+      }
     );
+  }
+
+  deleteTweet(id: string) {
+    let index = -1;
+    for (let [i,j] of this.tweets.entries()) {
+      if (id == j.id_str) {
+        index = i;
+        break;
+      }
+    }
+    if (index > -1) {
+      setTimeout(() => {
+        this.tweets.splice(index, 1);
+      },3000);
+    }
   }
 }

@@ -11,7 +11,7 @@ declare var $: any;
 export class AppComponent implements OnInit{
   constructor (private ts: TwitterService, private _alert: AlertService) {}
   ngOnInit() {
-    this.initInfiniteScroll();
+    //this.initInfiniteScroll();
     this.ts.getTweets().subscribe(
       tweets => {
         if (!tweets.error) {
@@ -32,12 +32,17 @@ export class AppComponent implements OnInit{
   infoText: string = '';
 
   initInfiniteScroll() {
-    $(window).scroll(() => {
-      if ($(window).scrollTop() >= $('body').height() - $(window).height() - 15) {
-        this.page++;
-        this.addToResults(this.page);
-      }
-    });
+    // $(window).scroll(() => {
+    //   if ($(window).scrollTop() >= $('body').height() - $(window).height() - 15) {
+    //     this.page++;
+    //     this.addToResults(this.page);
+    //   }
+    // });
+  }
+
+  onScroll() {
+    this.page++;
+    this.addToResults(this.page);
   }
 
   resetAll() { //reset variables paginacion y posicion del scroll

@@ -2,12 +2,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { ClipboardModule } from 'ngx-clipboard';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SearchComponent } from './search/search.component';
 import { TweetComponent } from './tweet/tweet.component';
-import { ClipboardModule } from 'ngx-clipboard';
+
+
 
 @NgModule({
   declarations: [
@@ -20,7 +23,8 @@ import { ClipboardModule } from 'ngx-clipboard';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ClipboardModule
+    ClipboardModule,
+    InfiniteScrollModule
   ],
   providers: [],
   bootstrap: [AppComponent]
